@@ -9,7 +9,7 @@ import com.metehanbolat.borutoappcompose.domain.model.Hero
 import com.metehanbolat.borutoappcompose.domain.model.HeroRemoteKey
 
 @Database(entities = [Hero::class, HeroRemoteKey::class], version = 1)
-@TypeConverters(Database::class)
+@TypeConverters(DatabaseConverter::class)
 abstract class BorutoDatabase: RoomDatabase() {
 
     abstract fun heroDao(): HeroDao
