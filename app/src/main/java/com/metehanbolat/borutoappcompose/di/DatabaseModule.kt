@@ -2,6 +2,7 @@ package com.metehanbolat.borutoappcompose.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.metehanbolat.borutoappcompose.data.local.BorutoDatabase
 import com.metehanbolat.borutoappcompose.util.Constants.BORUTO_DATABASE
 import dagger.Module
@@ -17,9 +18,13 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
-        context,
-        BorutoDatabase::class.java,
-        BORUTO_DATABASE
-    ).build()
+    fun provideDatabase(
+        @ApplicationContext context: Context
+    ): RoomDatabase{
+        return Room.databaseBuilder(
+            context,
+            BorutoDatabase::class.java,
+            BORUTO_DATABASE
+        ).build()
+    }
 }
