@@ -94,6 +94,30 @@ fun HalfFilledStar(
     }
 }
 
+@Composable
+fun EmptyStar(
+    starPath: Path,
+    starPathBounds: Rect,
+    scaleFactor: Float
+) {
+    Canvas(modifier = Modifier.size(24.dp)) {
+        val canvasSize = this.size
+        scale(scale = scaleFactor){
+            val pathWidth = starPathBounds.width
+            val pathHeight = starPathBounds.height
+            val left = (canvasSize.width / 2f) - (pathWidth / 1.7f)
+            val top = (canvasSize.height / 2f) - (pathHeight / 1.7f)
+
+            translate(left = left, top = top) {
+                drawPath(
+                    path = starPath,
+                    color = LightGray.copy(alpha = 0.5f)
+                )
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun FilledStarPreview() {
@@ -124,6 +148,24 @@ fun HalfFilledStarPreview() {
     }
 
     HalfFilledStar(
+        starPath = starPath,
+        starPathBounds = starPathBounds,
+        scaleFactor = 3f
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EmptyStarPreview() {
+    val starPathString = stringResource(id = R.string.star_path)
+    val starPath = remember {
+        PathParser().parsePathString(pathData = starPathString).toPath()
+    }
+    val starPathBounds = remember {
+        starPath.getBounds()
+    }
+
+    EmptyStar(
         starPath = starPath,
         starPathBounds = starPathBounds,
         scaleFactor = 3f
