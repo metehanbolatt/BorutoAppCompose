@@ -5,6 +5,7 @@ import com.metehanbolat.borutoappcompose.data.repository.DataStoreOperationsImpl
 import com.metehanbolat.borutoappcompose.data.repository.Repository
 import com.metehanbolat.borutoappcompose.domain.repository.DataStoreOperations
 import com.metehanbolat.borutoappcompose.domain.use_cases.UseCases
+import com.metehanbolat.borutoappcompose.domain.use_cases.get_all_heroes.GetAllHeroesUseCase
 import com.metehanbolat.borutoappcompose.domain.use_cases.read_onboarding.ReadOnBoardingUseCase
 import com.metehanbolat.borutoappcompose.domain.use_cases.save_onboarding.SaveOnBoardingUseCase
 import dagger.Module
@@ -29,7 +30,8 @@ object RepositoryModule {
     fun provideUseCases(repository: Repository): UseCases {
         return UseCases(
             saveOnBoardingUseCase = SaveOnBoardingUseCase(repository = repository),
-            readOnBoardingUseCase = ReadOnBoardingUseCase(repository = repository)
+            readOnBoardingUseCase = ReadOnBoardingUseCase(repository = repository),
+            getAllHeroesUseCase = GetAllHeroesUseCase(repository = repository)
         )
     }
 }
