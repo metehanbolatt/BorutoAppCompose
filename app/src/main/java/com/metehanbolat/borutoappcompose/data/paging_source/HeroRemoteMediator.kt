@@ -9,8 +9,6 @@ import com.metehanbolat.borutoappcompose.data.local.BorutoDatabase
 import com.metehanbolat.borutoappcompose.data.remote.BorutoApi
 import com.metehanbolat.borutoappcompose.domain.model.Hero
 import com.metehanbolat.borutoappcompose.domain.model.HeroRemoteKeys
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 @ExperimentalPagingApi
