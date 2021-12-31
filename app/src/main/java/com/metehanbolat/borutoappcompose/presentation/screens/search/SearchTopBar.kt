@@ -24,13 +24,13 @@ import com.metehanbolat.borutoappcompose.ui.theme.topAppBarContentColor
 @Composable
 fun SearchTopBar(
     text: String,
-    onTextChanged: (String) -> Unit,
+    onTextChange: (String) -> Unit,
     onSearchClicked: (String) -> Unit,
     onCloseClicked: () -> Unit
 ) {
     SearchWidget(
         text = text,
-        onTextChanged = onTextChanged,
+        onTextChange = onTextChange,
         onSearchClicked = onSearchClicked,
         onCloseClicked = onCloseClicked
     )
@@ -39,7 +39,7 @@ fun SearchTopBar(
 @Composable
 fun SearchWidget(
     text: String,
-    onTextChanged: (String) -> Unit,
+    onTextChange: (String) -> Unit,
     onSearchClicked: (String) -> Unit,
     onCloseClicked: () -> Unit
 ) {
@@ -53,7 +53,7 @@ fun SearchWidget(
         TextField(
             modifier = Modifier.fillMaxWidth(),
             value = text,
-            onValueChange = { onTextChanged(it) },
+            onValueChange = { onTextChange(it) },
             placeholder = {
                 Text(
                     modifier = Modifier.alpha(ContentAlpha.medium),
@@ -81,7 +81,7 @@ fun SearchWidget(
                 IconButton(
                     onClick = {
                         if (text.isNotEmpty()){
-                            onTextChanged("")
+                            onTextChange("")
                         }else{
                             onCloseClicked()
                         }
@@ -113,7 +113,7 @@ fun SearchWidget(
 fun SearchWidgetPreview() {
     SearchWidget(
         text = "",
-        onTextChanged = {},
+        onTextChange = {},
         onSearchClicked = {},
         onCloseClicked = {}
     )
