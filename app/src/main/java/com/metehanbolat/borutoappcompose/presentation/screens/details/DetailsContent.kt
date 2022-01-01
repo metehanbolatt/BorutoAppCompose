@@ -1,25 +1,33 @@
 package com.metehanbolat.borutoappcompose.presentation.screens.details
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import com.metehanbolat.borutoappcompose.R
 import com.metehanbolat.borutoappcompose.domain.model.Hero
 import com.metehanbolat.borutoappcompose.presentation.components.InfoBox
 import com.metehanbolat.borutoappcompose.presentation.components.OrderedList
 import com.metehanbolat.borutoappcompose.ui.theme.*
 import com.metehanbolat.borutoappcompose.util.Constants.ABOUT_TEXT_MAX_LINES
+import com.metehanbolat.borutoappcompose.util.Constants.BASE_URL
 
+@ExperimentalCoilApi
 @ExperimentalMaterialApi
 @Composable
 fun DetailsContent(
@@ -34,7 +42,14 @@ fun DetailsContent(
         scaffoldState = scaffoldState,
         sheetPeekHeight = MIN_SHEET_HEIGHT,
         sheetContent = { selectedHero?.let { BottomSheetContent(selectedHero = it) } },
-        content = {}
+        content = {
+            selectedHero?.let { hero ->
+                BackgroundContent(
+                    heroImage = hero.image,
+                    onCloseClicked = { navController.popBackStack() }
+                )
+            }
+        }
     )
 
 }
@@ -143,6 +158,54 @@ fun BottomSheetContent(
         }
 
     }
+}
+
+@ExperimentalCoilApi
+@Composable
+fun BackgroundContent(
+    heroImage: String,
+    imageFraction: Float = 1f,
+    backgroundColor: Color = MaterialTheme.colors.surface,
+    onCloseClicked: () -> Unit
+) {
+    val imageUrl = "$BASE_URL${heroImage}"
+    val painter = rememberImagePainter(imageUrl) {
+        error(R.drawable.ic_placeholder)
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(backgroundColor)
+    ) {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(fraction = imageFraction)
+                .align(Alignment.TopStart),
+            painter = painter,
+            contentDescription = stringResource(id = R.string.hero_image),
+            contentScale = ContentScale.Crop
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            IconButton(
+                modifier = Modifier.padding(all = SMALL_PADDING),
+                onClick = { onCloseClicked() }
+            ) {
+                Icon(
+                    modifier = Modifier.size(INFO_ICON_SIZE),
+                    imageVector = Icons.Default.Close,
+                    contentDescription = stringResource(id = R.string.close_icon),
+                    tint = Color.White
+                )
+            }
+        }
+
+    }
+
 }
 
 @Preview
